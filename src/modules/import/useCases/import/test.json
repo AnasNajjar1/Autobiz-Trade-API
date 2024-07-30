@@ -1,0 +1,24 @@
+{
+  "vehicles": [
+    {
+      "distributionBelt": null,
+      "nextTechnicalCheckDate": null,
+      "marketLink": null,
+      "b2cMarketValue": null,
+      "standardMileage": null,
+      "userId": null,
+      "createdAt": "2020-12-23 00:02:17.0",
+      "updatedAt": "2020-12-23 00:02:17.0",
+      "deletedAt": null,
+      "deletedBy": null,
+      "damages": null,
+      "userManual": null,
+      "secondSetKey": null,
+      "imported": null,
+      "profileBodyCosts": null,
+      "vin": null,
+      "dpaProAmt": null,
+      "salesSpeedName": null
+    }
+  ]
+}

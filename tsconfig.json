@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": false, // Enable strict features.. in progress
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es2017", // Let babel targets the right version of node
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    "allowJs": true,
+    "resolveJsonModule": true
+  }
+}

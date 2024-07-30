@@ -1,0 +1,19 @@
+{
+  "subject_register": "[autobizTrade] Nieuw inschrijvingsverzoek!",
+  "companyForm":"Bedrijf",
+  "companyNameForm":"Bedrijfsnaam",
+  "vatForm":"BTW-nummer",
+  "companyNumberForm":"KVK-nummer",
+  "companyAddressForm":"Adres",
+  "companyAddressAdditionForm":"Aanvullend adres",
+  "companyZipForm":"Postcode",
+  "companyCityForm":"Stad",
+  "companyCountryForm":"Land",
+  "contactForm":"Contact",
+  "civilityForm":"Aanhef",
+  "firstNameForm":"Voornaam",
+  "lastNameForm":"Achternaam",
+  "roleForm":"Functie",
+  "phoneNumberForm":"Telefoonnummer",
+  "emailForm":"E-mailadres"
+}

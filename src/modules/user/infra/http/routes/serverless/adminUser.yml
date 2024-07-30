@@ -1,0 +1,12 @@
+handler: src/modules/user/infra/http/routes/serverless/userHandler.main
+events:
+  - http:
+      path: admin/groupUser
+      method: any
+      cors: true
+      authorizer: aws_iam
+  - http:
+      path: admin/groupUser/{id}
+      method: any
+      cors: true
+      authorizer: aws_iam

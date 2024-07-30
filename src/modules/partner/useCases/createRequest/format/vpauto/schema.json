@@ -1,0 +1,334 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "fileNumber": {
+      "type": "string"
+    },
+    "brandLabel": {
+      "type": "string"
+    },
+    "modelLabel": {
+      "type": "string"
+    },
+    "versionLabel": {
+      "type": ["string", "null"]
+    },
+    "registration": {
+      "type": "string"
+    },
+    "vin": {
+      "type": ["string", "null"]
+    },
+    "salesComment": {
+      "type": ["string", "null"]
+    },
+    "user": {
+      "type": "string"
+    },
+    "request": {
+      "type": "string"
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "link": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": ["link", "title"]
+      }
+    },
+    "constructorEquipments": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "veryImportantDatEquipment": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "importantDatEquipment": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fewImportantDatEquipment": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "declaredEquipments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "damages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "custom_damage": {
+            "type": "string"
+          },
+          "is_custom": {
+            "type": "integer"
+          },
+          "element": {
+            "type": "string"
+          },
+          "damage": {
+            "type": ["string", "array"]
+          },
+          "damage_picture": {
+            "type": "string"
+          },
+          "damage_picture2": {
+            "type": "string"
+          },
+          "reconditionning": {
+            "type": "string"
+          },
+          "zone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "element",
+          "damage",
+          "damage_picture",
+          "damage_picture2",
+          "zone"
+        ]
+      }
+    },
+    "pointOfSale": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      },
+      "required": ["name", "zipCode", "city", "country"]
+    },
+    "administrativeDetails": {
+      "type": "object",
+      "properties": {
+        "gcDate": {
+          "type": ["string", "null"]
+        },
+        "firstHand": {
+          "type": ["string", "null"]
+        },
+        "vehicleType": {
+          "type": ["string", "null"]
+        },
+        "co2": {
+          "type": ["string", "null"]
+        },
+        "userManual": {
+          "type": ["string", "null"]
+        },
+        "secondSetKey": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "characteristics": {
+      "type": "object",
+      "properties": {
+        "mileage": {
+          "type": "integer"
+        },
+        "firstRegistrationDate": {
+          "type": "string"
+        },
+        "fuelLabel": {
+          "type": "string"
+        },
+        "liter": {
+          "type": "string"
+        },
+        "gearBoxLabel": {
+          "type": "string"
+        },
+        "seats": {
+          "type": "string"
+        },
+        "door": {
+          "type": ["string", "null"]
+        },
+        "metallic": {
+          "type": ["string", "null"]
+        },
+        "power": {
+          "type": "object",
+          "properties": {
+            "ch": {
+              "type": ["string", "null"]
+            },
+            "kw": {
+              "type": ["string", "null"]
+            }
+          },
+          "required": ["ch", "kw"]
+        },
+        "fiscal": {
+          "type": ["string", "null"]
+        },
+        "wheelsFrontDimensions": {
+          "type": ["object", "null"],
+          "properties": {
+            "diameter": {
+              "type": "string"
+            },
+            "width": {
+              "type": "string"
+            },
+            "height": {
+              "type": "string"
+            }
+          },
+          "required": ["diameter", "width", "height"]
+        },
+        "wheelsBackDimensions": {
+          "type": ["object", "null"],
+          "properties": {
+            "diameter": {
+              "type": "string"
+            },
+            "width": {
+              "type": "string"
+            },
+            "height": {
+              "type": "string"
+            }
+          },
+          "required": ["diameter", "width", "height"]
+        },
+        "wheelsFrontTireBrand": {
+          "type": ["string", "null"]
+        },
+        "wheelsBackTireBrand": {
+          "type": ["string", "null"]
+        },
+        "rimTypeFront": {
+          "type": ["string", "null"]
+        },
+        "rimTypeBack": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": [
+        "mileage",
+        "firstRegistrationDate",
+        "fuelLabel",
+        "liter",
+        "gearBoxLabel",
+        "seats",
+        "door"
+      ]
+    },
+    "history": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": ["string", "null"]
+        },
+        "purchaseInvoice": {
+          "type": ["string", "null"]
+        },
+        "vat": {
+          "type": ["string", "null"]
+        },
+        "imported": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "servicing": {
+      "type": "object",
+      "properties": {
+        "servicingHistory": {
+          "type": ["string", "null"]
+        },
+        "servicingInBrandNetwork": {
+          "type": ["string", "null"]
+        },
+        "servicingManualPicture": {
+          "type": ["string", "null"]
+        },
+        "servicingInvoices": {
+          "type": ["string", "null"]
+        },
+        "lastServicingDate": {
+          "type": ["string", "null"]
+        },
+        "lastServicingKm": {
+          "type": ["string", "null"]
+        },
+        "distributionBelt": {
+          "type": ["string", "null"]
+        },
+        "nextTechnicalCheckDate": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "gallery": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": ["key", "value"]
+      }
+    }
+  },
+  "required": [
+    "fileNumber",
+    "brandLabel",
+    "modelLabel",
+    "versionLabel",
+    "registration",
+    "user",
+    "request",
+    "documents",
+    "declaredEquipments",
+    "damages",
+    "pointOfSale",
+    "administrativeDetails",
+    "characteristics",
+    "history",
+    "servicing",
+    "gallery"
+  ]
+}

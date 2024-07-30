@@ -1,0 +1,336 @@
+{
+  "title": "vehicles",
+  "description": "vehicles table validation schema.",
+  "type": "object",
+  "properties": {
+    "fileNumber": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50
+    },
+    "registration": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50
+    },
+    "purchaseDate": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "statusId": {
+      "type": ["string", "integer"],
+      "enum": [1, 2, 3, 4, "1", "2", "3", "4"]
+    },
+    "offerType": {
+      "type": ["string", "null"],
+      "enum": [null, "stock", "offerToPrivate"]
+    },
+    "salesComment": {
+      "type": ["string", "null"],
+      "maxLength": 10000
+    },
+    "brandLabel": {
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "modelLabel": {
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "versionLabel": {
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "firstRegistrationDate": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "profileCosts": {
+      "type": ["string", "null"],
+      "enum": [null, "A", "B", "C", "D", "E"]
+    },
+    "profileBodyCosts": {
+      "type": ["string", "null"],
+      "enum": [null, "A", "B", "C", "D", "E"]
+    },
+    "carPictures": {
+      "type": ["object", "null"],
+      "additionalProperties": { "type": "string", "format": "uri" }
+    },
+    "carPicturesOthers": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "pointOfSaleId": {
+      "type": ["integer", "null"]
+    },
+    "keyPoints": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "declaredEquipments": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string"
+      }
+    },
+    "constructorEquipments": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string"
+      }
+    },
+    "mileage": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "fuelLabel": {
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "liter": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "gearBoxLabel": {
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "seats": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "door": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "ch": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "kw": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "fiscal": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "wheelsFrontDimensions": {
+      "type": ["object", "null"],
+      "properties": {
+        "diameter": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "height": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "width": {
+          "type": "string",
+          "maxLength": 3
+        }
+      },
+      "additionalProperties": false
+    },
+    "wheelsBackDimensions": {
+      "type": ["object", "null"],
+      "properties": {
+        "diameter": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "height": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "width": {
+          "type": "string",
+          "maxLength": 3
+        }
+      },
+      "additionalProperties": false
+    },
+    "wheelsFrontTireBrand": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "wheelsBackTireBrand": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "rimTypeFront": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "rimTypeBack": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "metallic": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "gcDate": {
+      "type": ["string", "null"],
+      "format": "date"
+    },
+    "firstHand": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "vehicleType": {
+      "type": ["string", "null"],
+      "maxLength": 255
+    },
+    "co2": {
+      "type": ["integer", "null"],
+      "maxLength": 50
+    },
+    "origin": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "purchaseInvoice": {
+      "type": ["string", "null"],
+      "format": "uri"
+    },
+    "vat": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "servicingHistory": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "servicingInBrandNetwork": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "servicingManualPicture": {
+      "type": ["string", "null"],
+      "format": "uri"
+    },
+    "servicingInvoices": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "lastServicingDate": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{4}-[0-9]{2}$"
+    },
+    "lastServicingKm": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "distributionBelt": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "nextTechnicalCheckDate": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{4}-[0-9]{2}$"
+    },
+    "marketLink": {
+      "type": ["string", "null"],
+      "format": "uri"
+    },
+    "b2cMarketValue": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "standardMileage": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "userId": {
+      "type": ["string", "null"],
+      "maxLength": 50
+    },
+    "damages": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "properties": {
+          "element": {
+            "type": "string"
+          },
+          "damage": {
+            "type": ["string", "array"]
+          },
+          "damage_picture": {
+            "type": "string"
+          },
+          "damage_picture2": {
+            "type": "string"
+          },
+          "reconditionning": {
+            "type": "string"
+          },
+          "zone": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "userManual": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "secondSetKey": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "imported": {
+      "type": ["integer", "null"],
+      "enum": [null, 0, 1]
+    },
+    "dpaProAmt": {
+      "type": ["integer", "null"]
+    },
+    "salesSpeedName": {
+      "type": ["string", "null"]
+    },
+    "ownerId": {
+      "type": ["integer", "null"]
+    },
+    "groupId": {
+      "type": ["integer", "null"]
+    },
+    "listId": {
+      "type": ["integer", "null"]
+    }
+  }
+}

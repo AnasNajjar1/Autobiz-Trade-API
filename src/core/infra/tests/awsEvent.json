@@ -1,0 +1,151 @@
+{
+    "body": null,
+    "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "FR",
+        "Host": "stg72-api-trade.shakazoola.com",
+        "Referer": "https://stg72-trade.shakazoola.com/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+        "Via": "2.0 45dddc65ba3da4a1716d9c10f4aaaa08.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Id": "DLi9fTdFhMf7vmbLT9bFMvf5xaSaWSLQHVvVXk2lLBcaGYSpe-KZKw==",
+        "X-Amzn-Trace-Id": "Root=1-605e15f4-0edc4f26053148cf39eb3ede",
+        "X-Forwarded-For": "178.22.128.152, 70.132.16.150",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https",
+        "origin": "https://stg72-trade.shakazoola.com",
+        "sec-ch-ua": "\u00e9\u00e9\u00e9",
+        "sec-ch-ua-mobile": "?0",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "x-amz-date": "20210326T171220Z",
+        "x-amz-security-token": "IQoJb3JpZ2luX2VjENH//////////wEaCWV1LXdlc3QtMSJHMEUCIQDgh05YugX1vzSKQ57SF/Z3+WIWykgyEtI4ueVefCUQLwIgHZJqcP2Y6Kab+OUlH0G9KCp9oM83KxMdSpsZ1aIV0Usq8QMIGhABGgw0NzM1NDU2Mjc5MDYiDPL5u5AtJodSfcfgeirOA6z74KkPrsrDB8ZWfSMFj/wqsPWb+0gUYnU3wCuLwbm1wVlTqK+5E0FIz7giSoNL9APEr3MIF8/WD6+97RmGVe6jqPKiuCwVJbqX1vJZIiZBCr84iC2W2VREpHOn3V+bsVTlQ3kuS7EMt0UVdMHev6cnZWLnfFoyBIkIhVLiqPNENY+pgr3711Kmo7exG/agFnuzBuj+orQOoy8XWj6wO7UFBTCjXBY7vzPgFW5qtu8HfSwm1S6InZcOwDMdJCiFinfUHmZZEAy+QsHF0Z4aUBLz/qzH70UbSWmZAyUn5ZQ2C0vGfbhfwGSAx4NRoyWp0fw54C7en/w+AhAvwj9V+CoysN+8KbpP92Y8cxciiLzv+6FejxgNm/XeHDI+Oifx6qF3BiXrOogN2SsTMBquqtE/dqLXQ3I7UqJU3I+CnuDYEWlp4mR/Y2rKhiVT4Tggch4fzxfw/GaF6SU3vI35v9pnaXWaI2Q1E2vQfJ2by+4H1ogJ49+vzbMykTa2e0CbiTx5WpQWfTGjKJcbOt0opEi4exvj005VPoYv1vVEMEH8jsvmWWp1zaVVIHt2Qgvhrz1SRFjrglWBCm8AQ6eWbuLYbvF/b2llH7i9diNrezDKpviCBjqEApsxDIeWvxVDt6Hx8995XhpVorrUbeik2rE+G1Cx1qV9/xH9E5jFuOs0j0GFtEgXFI1IImgHcwHd9JRs11nCH5K3BqVPj99STdXGRuHB6TH5XG6GbQSxJOcOLFgdAk+8ABQ/QLbCt3YO2/MpS7yd/eeknpWQK8RFu05+zBPv5lSHnUdYEZRVBIWOtRSp7NRpPdoOZRXjDZrUhbht677rpaMjR9ZWGPbddBzO59vKj30plos9bwC0T/0z15+7qSlOliT22Nxn5fFATUlMX4/+oq6tQ++Y3aEQKcr0vpKVl+edfzAGVngPmFYTBzZDdmkAAmFwVLqOOX5AROIcSjuU2Y/E/93h"
+    },
+    "httpMethod": "GET",
+    "isBase64Encoded": false,
+    "multiValueHeaders": {
+        "Accept": [
+            "application/json, text/plain, */*"
+        ],
+        "Accept-Encoding": [
+            "gzip, deflate, br"
+        ],
+        "Accept-Language": [
+            "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7"
+        ],
+        "CloudFront-Forwarded-Proto": [
+            "https"
+        ],
+        "CloudFront-Is-Desktop-Viewer": [
+            "true"
+        ],
+        "CloudFront-Is-Mobile-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-SmartTV-Viewer": [
+            "false"
+        ],
+        "CloudFront-Is-Tablet-Viewer": [
+            "false"
+        ],
+        "CloudFront-Viewer-Country": [
+            "FR"
+        ],
+        "Host": [
+            "stg72-api-trade.shakazoola.com"
+        ],
+        "Referer": [
+            "https://stg72-trade.shakazoola.com/"
+        ],
+        "User-Agent": [
+            "\u00e936"
+        ],
+        "Via": [
+            "2.0 45dddc65ba3da4a1716d9c10f4aaaa08.cloudfront.net (CloudFront)"
+        ],
+        "X-Amz-Cf-Id": [
+            "DLi9fTdFhMf7vmbLT9bFMvf5xaSaWSLQHVvVXk2lLBcaGYSpe-KZKw=="
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-605e15f4-0edc4f26053148cf39eb3ede"
+        ],
+        "X-Forwarded-For": [
+            "178.22.128.152, 70.132.16.150"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ],
+        "origin": [
+            "https://stg72-trade.shakazoola.com"
+        ],
+        "sec-ch-ua": [
+            "\u00e9"
+        ],
+        "sec-ch-ua-mobile": [
+            "?0"
+        ],
+        "sec-fetch-dest": [
+            "empty"
+        ],
+        "sec-fetch-mode": [
+            "cors"
+        ],
+        "sec-fetch-site": [
+            "same-site"
+        ],
+        "x-amz-date": [
+            "20210326T171220Z"
+        ],
+        "x-amz-security-token": [
+            "IQoJb3JpZ2luX2VjENH//////////wEaCWV1LXdlc3QtMSJHMEUCIQDgh05YugX1vzSKQ57SF/Z3+WIWykgyEtI4ueVefCUQLwIgHZJqcP2Y6Kab+OUlH0G9KCp9oM83KxMdSpsZ1aIV0Usq8QMIGhABGgw0NzM1NDU2Mjc5MDYiDPL5u5AtJodSfcfgeirOA6z74KkPrsrDB8ZWfSMFj/wqsPWb+0gUYnU3wCuLwbm1wVlTqK+5E0FIz7giSoNL9APEr3MIF8/WD6+97RmGVe6jqPKiuCwVJbqX1vJZIiZBCr84iC2W2VREpHOn3V+bsVTlQ3kuS7EMt0UVdMHev6cnZWLnfFoyBIkIhVLiqPNENY+pgr3711Kmo7exG/agFnuzBuj+orQOoy8XWj6wO7UFBTCjXBY7vzPgFW5qtu8HfSwm1S6InZcOwDMdJCiFinfUHmZZEAy+QsHF0Z4aUBLz/qzH70UbSWmZAyUn5ZQ2C0vGfbhfwGSAx4NRoyWp0fw54C7en/w+AhAvwj9V+CoysN+8KbpP92Y8cxciiLzv+6FejxgNm/XeHDI+Oifx6qF3BiXrOogN2SsTMBquqtE/dqLXQ3I7UqJU3I+CnuDYEWlp4mR/Y2rKhiVT4Tggch4fzxfw/GaF6SU3vI35v9pnaXWaI2Q1E2vQfJ2by+4H1ogJ49+vzbMykTa2e0CbiTx5WpQWfTGjKJcbOt0opEi4exvj005VPoYv1vVEMEH8jsvmWWp1zaVVIHt2Qgvhrz1SRFjrglWBCm8AQ6eWbuLYbvF/b2llH7i9diNrezDKpviCBjqEApsxDIeWvxVDt6Hx8995XhpVorrUbeik2rE+G1Cx1qV9/xH9E5jFuOs0j0GFtEgXFI1IImgHcwHd9JRs11nCH5K3BqVPj99STdXGRuHB6TH5XG6GbQSxJOcOLFgdAk+8ABQ/QLbCt3YO2/MpS7yd/eeknpWQK8RFu05+zBPv5lSHnUdYEZRVBIWOtRSp7NRpPdoOZRXjDZrUhbht677rpaMjR9ZWGPbddBzO59vKj30plos9bwC0T/0z15+7qSlOliT22Nxn5fFATUlMX4/+oq6tQ++Y3aEQKcr0vpKVl+edfzAGVngPmFYTBzZDdmkAAmFwVLqOOX5AROIcSjuU2Y/E/93h"
+        ]
+    },
+    "multiValueQueryStringParameters": null,
+    "path": "/sale/6782615b-fc6f-4de1-bdb1-1d61e633031f/info",
+    "pathParameters": {
+        "uuid": "6782615b-fc6f-4de1-bdb1-1d61e633031f"
+    },
+    "queryStringParameters": null,
+    "requestContext": {
+        "accountId": "473545627906",
+        "apiId": "e0ufgxwv4c",
+        "domainName": "stg72-api-trade.shakazoola.com",
+        "domainPrefix": "stg72-api-trade",
+        "extendedRequestId": "czhePGohjoEF2ng=",
+        "httpMethod": "GET",
+        "identity": {
+            "accessKey": "ASIAW4QME3EBH4SVHVM6",
+            "accountId": "473545627906",
+            "caller": "AROAW4QME3EBE55OL5E6X:CognitoIdentityCredentials",
+            "cognitoAuthenticationProvider": "apiV2.auth,apiV2.auth:eu-west-1:f9823600-f4b5-4759-889d-1b02c431135a:FR_1633657",
+            "cognitoAuthenticationType": "authenticated",
+            "cognitoIdentityId": "eu-west-1:2cc42315-4865-48f0-8f78-319129fae497",
+            "cognitoIdentityPoolId": "eu-west-1:f9823600-f4b5-4759-889d-1b02c431135a",
+            "principalOrgId": "o-8rqb2s6w4c",
+            "sourceIp": "178.22.128.152",
+            "user": "AROAW4QME3EBE55OL5E6X:CognitoIdentityCredentials",
+            "userAgent": "\u00e9",
+            "userArn": "arn:aws:sts::473545627906:assumed-role/b2b-plateform-api-staging-CognitoAuthRole-1KEJOSE8JEJ6E/CognitoIdentityCredentials"
+        },
+        "path": "/sale/6782615b-fc6f-4de1-bdb1-1d61e633031f/info",
+        "protocol": "HTTP/1.1",
+        "requestId": "432b4afe-64b2-4820-a033-dd3c4154c513",
+        "requestTime": "26/Mar/2021:17:12:20 +0000",
+        "requestTimeEpoch": 1616778740611,
+        "resourceId": "9go7q9",
+        "resourcePath": "/sale/{uuid}/info",
+        "stage": "staging"
+    },
+    "resource": "/sale/{uuid}/info",
+    "stageVariables": null
+}

@@ -1,0 +1,30 @@
+{
+  "title": "auctions",
+  "description": "auctions table validation schema.",
+  "type": "object",
+  "required": ["startDateTime", "endDateTime", "minimalPrice", "stepPrice"],
+  "properties": {
+    "salesType": {
+      "type": ["string", "null"],
+      "enum": [null, "auction", "immediatePurchase"]
+    },
+    "startDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "minimalPrice": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "stepPrice": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    }
+  }
+}

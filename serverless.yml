@@ -1,0 +1,766 @@
+service: b2b-plateform-api
+
+# Create an optimized package for our functions
+package:
+  individually: true
+  excludeDevDependencies: false
+
+plugins:
+  # - serverless-bundle # Package our functions with Webpack
+  #- serverless-offline-scheduler
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-webpack
+  - serverless-plugin-split-stacks
+  # - serverless-nested-stack #to avoid 200 ressources limit
+
+custom:
+  # Our stage is based on what is passed in when running serverless
+  # commands. Or fallsback to what we have set in the provider section.
+  stage: ${opt:stage}
+  userLoginTableName: b2b-users-login-${env:dynamodbSuffix}
+  configTableName: b2b-config-${env:dynamodbSuffix}
+  logTableName: ${env:logTableName}
+  emailTopicName: email-topic-${env:dynamodbSuffix}
+  cronAuctionFrequency: 2 #in minutes
+  cronNewVehiclesHour: 13
+  #cronNewVehiclesHour: 12 #hour of the day to send automatique email
+  # Set the table name here so we can use it while testing locally
+
+  # Load our secret environment variables based on the current stage.
+  # Fallback to default if it is not in prod.
+  #environment: ${file(.env)}
+  splitStacks:
+    nestedStackCount: 20 # Controls the number of created nested stacks
+    perType: true
+    # stackConcurrency: 5 # Controls if enabled and how much stacks are deployed in parallel. Disabled if absent.
+    # resourceConcurrency: 10 # Controls how much resources are deployed in parallel. Disabled if absent.
+  cors:
+    origin: '*'
+    headers:
+      - Content-Type
+      - Authorization
+
+  serverless-offline:
+    httpPort: 4000
+    noPrependStageInUrl: true
+    useChildProcesses: false
+
+  webpack:
+    webpackConfig: webpack.config.js
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: eu-west-1
+  timeout: 30 # optional, in seconds, default is 6
+  vpc:
+    securityGroupIds:
+      - ${env:securityGroupId1}
+    subnetIds:
+      - ${env:subnetId1}
+      - ${env:subnetId2}
+
+  # apiKeys:
+  #   - ${opt:stage, self:provider.stage}-internalUsageStaticKey
+  # usagePlan:
+  #   quota:
+  #     limit: 5000
+  #     offset: 2
+  #     period: MONTH
+  #   throttle:
+  #     burstLimit: 200
+  #     rateLimit: 100
+
+  # These environment variables are made available to our functions
+  # under process.env.
+  #stage: ${self:custom.stage}
+  environment:
+    stage: ${self:custom.stage}
+    dbHost: ${env:dbHost}
+    dbName: ${env:dbName}
+    dbUser: ${env:dbUser}
+    dbPassword: ${env:dbPassword}
+    autobizApiPath: ${env:autobizApiPath}
+    autobizApiSecretKey: ${env:autobizApiSecretKey}
+    autobizApiKey: ${env.autobizApiKey}
+    identityPoolId: ${env:identityPoolId}
+    developerAuthProvider: apiV2.auth
+    userLoginTableName: ${self:custom.userLoginTableName}
+    carcheckApiPath: ${env:carcheckApiPath}
+    imageBucket: ${env:imageBucket}
+    carcheckImageBucket: ${env:carcheckImageBucket}
+    carcheckUrl: ${env:carcheckUrl}
+    configTableName: ${self:custom.configTableName}
+    logTableName: ${env:logTableName}
+    emailTopicName: ${self:custom.emailTopicName}
+    cronAuctionFrequency: ${self:custom.cronAuctionFrequency}
+    emailFrom: ${env:emailFrom}
+    emailReplyTo: ${env:emailReplyTo}
+    siteUrl: ${env:siteUrl}
+    googleMapsKey: ${env:googleMapsKey}
+    plateRecognizerKey: ${env:plateRecognizerToken}
+    cronNewVehiclesHour: ${self:custom.cronNewVehiclesHour}
+    emailRegister: ${env:emailRegister}
+    recaptchaSecretKey: ${env.recaptchaSecretKey}
+    recaptchaInvisibleSecretKey: ${env.recaptchaInvisibleSecretKey}
+    apiId: ${env.apiId}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - cognito-identity:GetOpenIdTokenForDeveloperIdentity
+      Resource:
+        - arn:aws:cognito-identity:eu-west-1:473545627906:identitypool/${env:identityPoolId}
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      # Restrict our IAM role permissions to
+      # the specific table for the stage
+      Resource:
+        - 'Fn::GetAtt': [LoginsTable, Arn]
+        - 'Fn::GetAtt': [ConfigTable, Arn]
+        - arn:aws:dynamodb:eu-west-1:473545627906:table/${env:logTableName}
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:ListBucket
+      Resource:
+        - arn:aws:s3:::carcheck-autobiz-expertise/inspection/*
+        - arn:aws:s3:::carcheck-autobiz-expertise-staging/inspection/*
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+        - s3:ListBucket
+        - s3:PutObjectAcl
+      Resource:
+        - arn:aws:s3:::b2b-pictures-${self:custom.stage}/*
+    - Effect: Allow
+      Action:
+        - s3:ListAllMyBuckets
+      Resource:
+        - arn:aws:s3:::*
+    - Effect: Allow
+      Action:
+        - translate:TranslateText
+        - comprehend:DetectDominantLanguage
+      Resource:
+        - '*'
+    - Effect: Allow
+      Action:
+        - 'ses:SendEmail'
+      Resource:
+        - '*'
+    - Effect: 'Allow'
+      Action:
+        - 'sns:Publish'
+      Resource:
+        - '*'
+
+
+
+functions:
+  doc:
+    handler: src/infra/doc/handler.html
+    events:
+      - http:
+          path: doc
+          method: get
+          cors: true
+
+  # Defines an HTTP API endpoint that calls the main function in create.js
+  # - path: url path is /notes
+  # - method: POST request
+  # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
+  #     domain api call
+  # - authorizer: authenticate using the AWS IAM role
+
+  # --------------------------------------------------
+  # -------------------- AUTH ------------------------
+  # --------------------------------------------------
+  recaptchaAuthorizerAccess:
+    handler: src/infra/recaptcha/recaptchaAuthorizer.handler
+  jwtAuthorizer:
+    handler: src/infra/auth/jwtAuthorizer.handler
+
+  login:
+    handler: src/modules/auth/useCases/login/index.loginHandler
+    events:
+      - http:
+          path: auth
+          method: post
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Username
+              - Password
+              - Authorization
+          authorizer: recaptchaAuthorizerAccess
+  refreshToken:
+    handler: src/modules/auth/useCases/refreshToken/index.refreshTokenHandler
+    events:
+      - http:
+          path: refresh
+          method: post
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Refresh-Token
+
+  register:
+    handler: src/modules/auth/useCases/register/index.registerHandler
+    events:
+      - http:
+          path: register/{language+}
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: recaptchaAuthorizerAccess
+
+  logout:
+    handler: src/modules/auth/useCases/logout/index.logoutHandler
+    events:
+      - http:
+          path: logout
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  resetPassword:
+    handler: src/modules/auth/useCases/resetPassword/index.resetPasswordHandler
+    events:
+      - http:
+          path: resetPassword
+          method: post
+          cors: 
+            origin: '*'
+
+  # --------------------------------------------------
+  # ------------------- PUBLIC -----------------------
+  # --------------------------------------------------
+  publicSalesList:
+    handler: src/modules/catalog/useCases/sales/getOnlineSales/index.getOnlineSalesHandler
+    events:
+      - http:
+          path: sale/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicGeoloc:
+    handler: src/modules/catalog/useCases/filters/getPositionFromZipcode/index.getPositionFromZipcodeHandler
+    events:
+      - http:
+          path: geoloc/
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicFilterList:
+    handler: src/modules/catalog/useCases/filters/getUserFilters/index.getUserFiltersHandler
+    events:
+      - http:
+          path: filter/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicSaleVehicle:
+    handler: src/modules/catalog/useCases/sales/getSaleByUuid/index.getSaleByUuidHandler
+    events:
+      - http:
+          path: sale/{uuid}/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicSaleInfo:
+    handler: src/modules/catalog/useCases/sales/getSaleInfo/index.getSaleInfoHandler
+    events:
+      - http:
+          path: sale/{uuid}/info
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicMakeOffer:
+    handler: src/modules/catalog/useCases/offers/makeOffer/index.makeOfferHandler
+    events:
+      - http:
+          path: sale/{uuid}/offer
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicBookmarkSale:
+    handler: src/modules/catalog/useCases/sales/bookmarkSale/index.bookmarkSaleHandler
+    events:
+      - http:
+          path: bookmark/sale/{uuid}/
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicPointOfSale:
+    handler: src/modules/pointofsale/useCases/getPointofsaleByUuid/index.getPointofsaleByUuidHandler
+    events:
+      - http:
+          path: pointOfSale/{uuid}/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicPointOfSalesList:
+    handler: src/modules/pointofsale/useCases/getOnlinePointofsalesList/index.getOnlinePointofsalesListHandler
+    events:
+      - http:
+          path: pointOfSale/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicBookmarkPointOfSale:
+    handler: src/modules/pointofsale/useCases/bookmarkPointofsale/index.bookmarkPointofsaleHandler
+    events:
+      - http:
+          path: bookmark/pointOfSale/{uuid}/
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicPartnerOfferCreate:
+    handler: src/modules/partner/useCases/createPartnerOffer/index.createPartnerOfferHandler
+    events:
+      - http:
+          path: partnerOffer/{uuid}
+          method: post
+          cors: true
+          private: true
+          # authorizer: aws_iam
+
+  publicGetlistsByUser:
+    handler: src/modules/list/useCases/getListsByUser/index.getListsByUserHandler
+    events:
+      - http:
+          path: list/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicMaskRegistration:
+    handler: src/modules/image/useCases/maskRegistration/index.maskRegistrationHandler
+    events:
+      - http:
+          path: plateHidder/
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+  
+  publicOffersList:
+    handler: src/modules/catalog/useCases/offers/getOffers/index.getOffersHandler
+    events:
+      - http:
+          path: offer/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  publicAggregations:
+    handler: src/modules/catalog/useCases/aggregations/getAggregations/index.getAggregationsHandler
+    events:
+      - http:
+          path: aggregations/
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # --------------------------------------------------
+  # ------------------- ADMIN ------------------------
+  # --------------------------------------------------
+  importFile:
+    handler: src/modules/fileImport/useCases/importVehicleSale/index.createImportVehicleSaleHandler
+    events:
+      - http:
+          path: admin/import/vehicle
+          method: post
+          cors: true
+          authorizer: jwtAuthorizer
+  importVehicleImage:
+    handler: src/modules/fileImport/useCases/importVehicleImage/index.createImportVehicleImageHandler
+    events:
+      - http:
+          path: admin/import/image
+          method: post
+          cors: true
+          authorizer: jwtAuthorizer     
+
+  importFileList:
+    handler: src/modules/fileImport/useCases/getAdminImport/index.createAdminImportHandler
+    events:
+      - http:
+          path: admin/import
+          method: get
+          cors: true
+          authorizer: jwtAuthorizer
+
+  adminGroup:
+    handler: src/modules/group/useCases/adminGroupHandler.main
+    events:
+      - http:
+          path: admin/group
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+      - http:
+          path: admin/group/{id}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminUser:
+    handler: src/modules/user/useCases/adminUserHandler.main
+    events:
+      - http:
+          path: admin/groupUser
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+      - http:
+          path: admin/groupUser/{id}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminGetUserByAutobizUserId:
+    handler: src/modules/user/useCases/getUserByAutobizUserId/index.getUserByAutobizUserIdHandler
+    events:
+      - http:
+          path: admin/groupUserByAutobizId/{autobizUserId}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/groupUserByAutobizId/{autobizUserId}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminList:
+    handler: src/modules/list/useCases/adminListHandler.main
+    events:
+      - http:
+          path: admin/list
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+      - http:
+          path: admin/list/{id}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminConfig:
+    handler: src/modules/config/handler.main
+    events:
+      - http:
+          path: admin/config/{any+}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+      - http:
+          path: admin/config
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminPointOfSale:
+    handler: src/modules/pointofsale/useCases/adminPointofsaleHandler.main
+    events:
+      - http:
+          path: admin/pointOfSale
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+      - http:
+          path: admin/pointOfSale/{id}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminFacade:
+    handler: src/modules/facade/useCases/facadeHandler.main
+    events:
+      - http:
+          path: admin/facade/{any+}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  importRecord:
+    handler: src/modules/import/useCases/import/index.importRecordHandler
+    events:
+      - http:
+          path: carcheckImport/{id}
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/carcheckImport/{id}
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminOfferList:
+    handler: src/modules/catalog/useCases/offers/getAdminOffers/index.getAdminOffersHandler
+    events:
+      - http:
+          path: admin/offer
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/offer
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminOfferDelete:
+    handler: src/modules/catalog/useCases/offers/deleteOffer/index.deleteOfferHandler
+    events:
+      - http:
+          path: admin/offer/{id}
+          method: delete
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminSalesList:
+    handler: src/modules/catalog/useCases/sales/getAdminSales/index.getAdminSalesHandler
+    events:
+      - http:
+          path: admin/sale
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/sale
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+  
+  # USED BY CARCHECK
+  adminSaleCreate:
+    handler: src/modules/catalog/useCases/sales/createSale/index.createSaleHandler
+    events:
+      - http:
+          path: admin/sale
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/sale
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminSaleUpdate:
+    handler: src/modules/catalog/useCases/sales/updateSale/index.updateSaleHandler
+    events:
+      - http:
+          path: admin/sale/{id}
+          method: put
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/sale/{id}
+          method: put
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminLogsList:
+    handler: src/modules/log/useCases/getLogsList/index.getLogsListHandler
+    events:
+      - http:
+          path: admin/log
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminSaleGet:
+    handler: src/modules/catalog/useCases/sales/getAdminSaleById/index.getAdminSaleByIdHandler
+    events:
+      - http:
+          path: admin/sale/{id}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/sale/{id}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminSaleDelete:
+    handler: src/modules/catalog/useCases/sales/deleteSale/index.deleteSaleHandler
+    events:
+      - http:
+          path: admin/sale/{id}
+          method: delete
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminVehiclesList:
+    handler: src/modules/catalog/useCases/vehicles/getAdminVehicles/index.getAdminVehiclesHandler
+    events:
+      - http:
+          path: admin/vehicle
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/vehicle
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminVehicleGet:
+    handler: src/modules/catalog/useCases/vehicles/getAdminVehicleById/index.getAdminVehicleByIdHandler
+    events:
+      - http:
+          path: admin/vehicle/{id}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/vehicle/{id}
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminVehicleDelete:
+    handler: src/modules/catalog/useCases/vehicles/deleteVehicle/index.deleteVehicleHandler
+    events:
+      - http:
+          path: admin/vehicle/{id}
+          method: delete
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  adminVehicleCreate:
+    handler: src/modules/catalog/useCases/vehicles/createVehicle/index.createVehicleHandler
+    events:
+      - http:
+          path: admin/vehicle/
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  # USED BY CARCHECK
+  adminVehicleUpdate:
+    handler: src/modules/catalog/useCases/vehicles/updateVehicle/index.updateVehicleHandler
+    events:
+      - http:
+          path: admin/vehicle/{id}
+          method: put
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/vehicle/{id}
+          method: put
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+  
+  # USED BY CARCHECK
+  partners:
+    handler: src/modules/partner/useCases/adminPartnerHandler.main
+    events:
+      - http:
+          path: admin/partner/{any+}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/partner/{any+}
+          method: any
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+      - http:
+          path: admin/partner
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: aws_iam
+      - http:
+          path: v2/admin/partner
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+  uploadImage:
+    handler: src/modules/image/useCases/uploadImage/index.uploadImageHandler
+    events:
+      - http:
+          path: admin/image
+          method: post
+          cors: ${self:custom.cors}
+          authorizer: jwtAuthorizer
+
+  #Cron
+  # endAuctionNotification:
+  #   handler: src/modules/catalog/useCases/sales/endSaleNotification/index.endSaleNotificationHandler
+  #   events:
+  #     - schedule: rate(${self:custom.cronAuctionFrequency} minutes)
+
+  # newVehiclesOnline:
+  #   handler: src/modules/catalog/useCases/sales/newVehiclesOnline/index.newVehicleOnlineHandler
+  #   events:
+  #     - schedule: cron(40 ${self:custom.cronNewVehiclesHour} ? * MON-SAT *) # at 1:40pm (UTC) every day except sunday
+
+  # NewCoverageRequest:
+  #   handler: src/cron/newCoverageRequest.main
+  #   events:
+  #     - schedule: cron(0/1 * * * ? *)
+
+  # sendNotifications:
+  #   handler: src/cron/sendNotifications.main
+  #   events:
+  #     - schedule: cron(0/1 * * * ? *)
+
+  # purgeNotifications:
+  #   handler: src/cron/purgeNotifications.main
+  #   events:
+  #     - schedule: cron(0 6 * * ? *) # at 6am every day
+
+  #Event
+  dispatcher:
+    handler: src/modules/events/useCases/receivedMessage/index.receivedMessageHandler
+    timeout: 300
+    events:
+      - sns: ${self:custom.emailTopicName}
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(src/infra/serverless/resources/api-gateway-errors.yml)}
+  # DynamoDB
+  - ${file(src/infra/serverless/resources/dynamodb-table.yml)}
+  # S3
+  #- ${file(src/infra/serverless/resources/s3-bucket.yml)}
+  # Cognito
+  - ${file(src/infra/serverless/resources/cognito-user-pool.yml)}
+  - ${file(src/infra/serverless/resources/cognito-identity-pool.yml)}
+  # - ${file(src/infra/serverless/resources/sns-topics.yml)}

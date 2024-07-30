@@ -1,0 +1,90 @@
+{
+  "title": "sales",
+  "description": "sales table validation schema.",
+  "type": "object",
+  "required": ["startDateTime", "endDateTime"],
+  "properties": {
+    "acceptAuction": {
+      "type": ["string", "integer"],
+      "enum": [0, 1, "0", "1"]
+    },
+    "acceptImmediatePurchase": {
+      "type": ["string", "integer"],
+      "enum": [0, 1, "0", "1"]
+    },
+    "acceptSubmission": {
+      "type": ["string", "integer"],
+      "enum": [0, 1, "0", "1"]
+    },
+    "startDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "auctionStartPrice": {
+      "type": ["string", "integer"],
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "auctionStepPrice": {
+      "type": ["string", "integer"],
+      "maximum": 1000000
+    },
+    "immediatePurchasePrice": {
+      "type": ["string", "integer"]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "acceptAuction": {
+            "enum": [1]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "auctionStepPrice": {
+            "minimum": 1
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "auctionStepPrice": {
+            "minimum": 0,
+            "maximum": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "acceptImmediatePurchase": {
+            "enum": [1]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "immediatePurchasePrice": {
+            "minimum": 1
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "immediatePurchasePrice": {
+            "minimum": 0,
+            "maximum": 0
+          }
+        }
+      }
+    }
+  ]
+}

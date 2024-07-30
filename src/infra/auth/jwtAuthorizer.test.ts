@@ -1,0 +1,17 @@
+import { TokenExpiredError } from 'jsonwebtoken';
+import { AuthorizerJwt } from './jwtAuthorizer';
+
+describe('jwt', () => {
+  test('should verify the token', () => {
+    const jwtToken =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsInZlciI6MiwianRpIjoiYjJjYzUyN2I1NjA3ODM4MjRiMGQwYTExMTczNWE5OWYifQ.eyJpc3MiOiJzdGc3Mi1hcGkuc2hha2F6b29sYS5jb20iLCJhdWQiOiI2NjAyODYwOTE2MTI4ODUxMDU5IiwianRpIjoiYjJjYzUyN2I1NjA3ODM4MjRiMGQwYTExMTczNWE5OWYiLCJpYXQiOjE2MjU1ODI4MzksIm5iZiI6MTYyNTU4MjgzOSwiZXhwIjoxNjI1NTg2NDM5LCJkYXRhIjoiYToyMjp7czo2OlwidXNlcklkXCI7aToxNjMzMjQ1O3M6MTI6XCJzdWJzdGl0dXRlSWRcIjtOO3M6MTI6XCJleHBpcmluZ0RhdGVcIjtzOjE5OlwiMjEyMC0wOC0xOSAwOTowMDowMFwiO3M6OTpcImZpcnN0bmFtZVwiO3M6NTpcIk5vdXJhXCI7czo4OlwibGFzdG5hbWVcIjtzOjc6XCJOb3Vpb3VpXCI7czo4OlwidXNlcm5hbWVcIjtzOjEyOlwibm91aW91aS5kLmZyXCI7czo1OlwiZW1haWxcIjtzOjIxOlwibi5ub3Vpb3VpQGF1dG9iaXouY29tXCI7czoxMjpcImNvbmNlc3Npb25JZFwiO2k6MDtzOjk6XCJjb21wYW55SWRcIjtpOjA7czoxNzpcImdyb3VwQ29uY2Vzc2lvbklkXCI7aTowO3M6MTI6XCJjYWxsQ2VudGVySWRcIjtpOjA7czoxNDpcInN1YnNjcmlwdGlvbklkXCI7aToxMzEzNTtzOjE4Olwic3Vic2NyaXB0aW9uVXNlcklkXCI7aTo0MzIwMDtzOjg6XCJsYW5ndWFnZVwiO3M6MjpcImZyXCI7czo3OlwiY291bnRyeVwiO3M6MjpcIkZSXCI7czoxMDpcInZlcnRpY2FsSWRcIjtpOjI4O3M6MTI6XCJ2ZXJ0aWNhbE5hbWVcIjtzOjc6XCJBVVRPQklaXCI7czo4OlwidXNlclR5cGVcIjtpOjI5NTQzMjtzOjk6XCJncm91cExpc3RcIjthOjI6e2k6MDtzOjE6XCIwXCI7aToxO3M6MjpcIjY3XCI7fXM6MTY6XCJkZWZhdWx0R3JvdXBMaXN0XCI7YTowOnt9czo5OlwicmF0ZUxpbWl0XCI7YTowOnt9czo1OlwicnVsZXNcIjtzOjI4NTpcIjpyZWZlcmVudGlhbDpyZWZlcmVudGlhbElEOnJlZmVyZW50aWFsRGV0YWlsOnJlZmVyZW50aWFsUmF3VmluOmRhdGFBQUE6ZGF0YU9FTTpxdW90YXRpb246cXVvdGF0aW9uSUQ6cXVvdGF0aW9uUmVnOnF1b3RhdGlvbkIyQzp1Y1F1b3RhdGlvbk1hcmtldDpteVN0b2NrOnZpbkRlY29kZXI6YnV5ZXJDYXJjaGVjazptYW5hZ2VyQ2FyY2hlY2s6YWRtaW5DYXJjaGVjazphbmFseXNpc01hcmtldFNhbGVzTmV0d29yazpnb29kRGVhbHNNYXJrZXQ6dHJhZGVJbk1hcmtldDp0cmFkZUluU2VydmljZU1hcmtldFwiO30ifQ.pOJlrjXO0c6aV1BS3z8aiNWwF9B2_HnGskgd3qjVxN4';
+    const autobizApikey =
+      '!4DmsLY{j@XyKT2kq@57.[p5,@Y)50nRnkYx`]`|w$LE:=ny?0,GDt1Lt*d=ZB9';
+    try {
+      const authorizer = new AuthorizerJwt(autobizApikey);
+      authorizer.verify(jwtToken);
+    } catch (error) {
+      expect(error).toEqual(new TokenExpiredError('jwt expired', new Date()));
+    }
+  });
+});

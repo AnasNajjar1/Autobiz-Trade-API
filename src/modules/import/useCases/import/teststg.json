@@ -1,0 +1,27 @@
+{
+  "vehicles": [
+    {
+      "distributionBelt": "to_change",
+      "nextTechnicalCheckDate": "2022-01",
+      "marketLink": "https://www.autobiz-market.com/fr/SVO/undefined",
+      "b2cMarketValue": null,
+      "standardMileage": null,
+      "userId": "AKIAW4QME3EBICONNMVU",
+      "createdAt": "2020-12-15T15:43:55.000Z",
+      "updatedAt": "2020-12-16T23:00:31.000Z",
+      "deletedAt": null,
+      "damages": "[{\"custom_damage\":\"\",\"is_custom\":0,\"element\":\"distribution_belt\",\"damage\":\"to_change\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"to_change\",\"zone\":\"servicing\"},{\"custom_damage\":\"\",\"is_custom\":0,\"element\":\"second_set_keys\",\"damage\":\"no\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"no\",\"zone\":\"servicing\"},{\"custom_damage\":\"\",\"is_custom\":0,\"element\":\"wheels_front_left_brake\",\"damage\":\"plate_and_disc\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"plate_and_disc\",\"zone\":\"wheels\"},{\"custom_damage\":\"\",\"is_custom\":0,\"element\":\"wheels_back_right_brake\",\"damage\":\"brake_plate\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"brake_plate\",\"zone\":\"wheels\"},{\"custom_damage\":\"Distribution\",\"is_custom\":1,\"element\":\"motor_oil_leak\",\"damage\":\"has_custom_cost\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"has_custom_cost\",\"zone\":\"motor\"},{\"custom_damage\":\"Tâche\",\"is_custom\":1,\"element\":\"motor_cooling_leak\",\"damage\":\"has_custom_cost\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"has_custom_cost\",\"zone\":\"motor\"},{\"custom_damage\":\"\",\"is_custom\":0,\"element\":\"inside_cleaning\",\"damage\":\"strong_clean\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"strong_clean\",\"zone\":\"inner\"},{\"custom_damage\":\"Bug\",\"is_custom\":1,\"element\":\"road_test_witness\",\"damage\":\"has_custom_cost\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"has_custom_cost\",\"zone\":\"road_test\"},{\"custom_damage\":\"\",\"is_custom\":0,\"element\":\"car_inspection\",\"damage\":\"full\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"reconditionning\":\"full\",\"zone\":\"servicing\"},{\"element\":\"car_crashed\",\"damage\":\"no\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"zone\":\"crash\"},{\"element\":\"body_rear_trunk_floor\",\"damage\":\"deformed\",\"damage_picture\":\"https://b2b-pictures-dev.s3-eu-west-1.amazonaws.com/carcheck/13390/5112cea6-b73f-4160-8903-a69bf1b29caf.jpg\",\"damage_picture2\":\"\",\"zone\":\"crash\"},{\"element\":\"motor_longeron\",\"damage\":\"\",\"damage_picture\":\"\",\"damage_picture2\":\"\",\"zone\":\"crash\"}]",
+      "userManual": 1,
+      "secondSetKey": 0,
+      "imported": 1,
+      "active": 1,
+      "profileBodyCosts": null,
+      "vin": null,
+      "dpaProAmt": null,
+      "salesSpeedName": null,
+      "ownerId": 64,
+      "groupId": 26,
+      "listId": null
+    }
+  ]
+}

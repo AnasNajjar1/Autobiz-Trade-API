@@ -1,0 +1,50 @@
+Resources:
+  LoginsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.userLoginTableName}
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST
+
+  ConfigTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.configTableName}
+        AttributeDefinitions:
+          - AttributeName: type
+            AttributeType: S
+        KeySchema:
+          - AttributeName: type
+            KeyType: HASH
+        # Set the capacity to auto-scale
+        BillingMode: PAY_PER_REQUEST
+  # AuctionsTable:
+  #   Type: AWS::DynamoDB::Table
+  #   Properties:
+  #     TableName: ${self:custom.auctionsTableName}
+  #     AttributeDefinitions:
+  #       - AttributeName: id
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: id
+  #         KeyType: HASH
+  #     # Set the capacity to auto-scale
+  #     BillingMode: PAY_PER_REQUEST
+  # Translations:
+  #   Type: AWS::DynamoDB::Table
+  #   Properties:
+  #     TableName: ${self:custom.translationsTableName}
+  #     AttributeDefinitions:
+  #       - AttributeName: country
+  #         AttributeType: S
+  #     KeySchema:
+  #       - AttributeName: country
+  #         KeyType: HASH
+  #     # Set the capacity to auto-scale
+  #     BillingMode: PAY_PER_REQUEST

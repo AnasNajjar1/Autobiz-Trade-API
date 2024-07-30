@@ -1,0 +1,440 @@
+openapi: 3.0.0
+info:
+  description: autobizTrade allows you to get notify when you sell or purchase a car
+  version: 1.0.0
+  title: API autobizTrade
+  contact:
+    email: b.chandon@autobiz.com
+paths:
+  /your-url:
+    post:
+      summary: Webhook notification
+      description: "You'll be notify when a new file is created on autobizTrade - Please provide us a url and header, we'll POST the vehicle description to notify your application"
+      operationId: newVehicle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Vehicle"
+externalDocs:
+  description: Find out more about autobiz
+  url: https://corporate.autobiz.com/
+servers:
+  - url: https://api-trade.autobiz.com
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: 4c57d789-f925-454d-b49a-456cb745d69b
+        country:
+          type: string
+          example: FR
+        vin:
+          type: string
+          example : VF1KERR0A35487595
+        registration:
+          type: string
+          example : AA123BB
+        currentMileage:
+          type: integer
+          example: 12200
+        recordId:
+          type: integer
+          example: 5
+        createdBy:
+          type: integer
+          example: 12443
+        createdAt:
+          type: string
+          example: 2021-03-01 11:32:28
+        updatedBy:
+          type: integer
+          example: 12343
+        updatedAt:
+          type: string
+          example: 2021-03-01 11:32:28
+        status:
+          type: object
+          properties:
+            id:
+              type: integer
+              example : 5
+            key:
+              type: string
+              example: purchased
+        event:
+          type: string
+          example: trade_purchased
+        vehicle:
+          type: object
+          properties:
+            serviceHistory:
+              type: object
+              properties:
+                ownersManual:
+                  type: boolean
+                maintenanceInvoice:
+                  type: boolean
+                running:
+                  type: boolean
+                distributionBelt:
+                  type: boolean
+                lastTechnicalInspectionDate:
+                  type: string
+                  example: 2019-08-25
+                purchaseInvoice:
+                  type: boolean
+                damaged:
+                  type: boolean
+                modified:
+                  type: boolean
+                secondKeySet:
+                  type: boolean
+            manufacturerVehicleCode:
+              type: string
+              example: 1CH5AFPLHKB0A0C5
+            bodyName:
+              type: string
+              example: BREAK
+            fuelName:
+              type: string
+              example: ESSENCE
+            exteriorColor:
+              type: string
+              example: GREY
+            interiorColor:
+              type: string
+              example: BROWN
+            reconditioningDetails:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  source:
+                    type: string
+                    example: autobizTrade
+                  elementType:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Porte avant gauche
+                      id:
+                        type: integer
+                        example : 1
+                      key:
+                        type: string
+                        example: leftFrontDoor
+                  zoneType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      key:
+                        type: string
+                        example: body
+                      name:
+                        type: string
+                        example: Carrosserie
+                  reconditioningType:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        example: paint
+                      name:
+                        type: string
+                        example: Peinture
+                      id:
+                        type: integer
+                        example: 3
+                  images:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 7d2a9971-9837-4381-acc5-d87db968872b
+                        link:
+                          type: string
+                          example: https://bit.ly/7d2a9971-9837-4381-acc5-d87db968872b
+            imported:
+              type: boolean
+            makeName:
+              type: string
+              example: RENAULT
+            gearboxName:
+              type: string
+              example: AUTOMATIQUE
+            versions:
+              type: object
+              properties:
+                finish:
+                  type: string
+                  example: CONFORT DYNAMIQUE
+                id:
+                  type: integer
+                  example: 34722
+                name:
+                  type: string
+                  example: ESTATE 1.6 110 CONFORT DYNAMIQUE BVA
+            equipments:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 8
+                  key:
+                    type: string
+                    example: gpsNavigator
+                  name:
+                    type: string
+                    example: GPS
+            certificateDate:
+              type: string
+              example: 2006-03-09 00:00:00
+            gearboxId:
+              type: integer
+              example: 2
+            speedNumber:
+              type: integer
+              example: 4
+            liter:
+              type: integer
+              example: 1.6
+            kw:
+              type: integer
+              example: 82
+            cylinderCapacity:
+              type: integer
+              example: 1598
+            bodyId:
+              type: integer
+              example: 4
+            vehicleType:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: VP
+                name:
+                  type: string
+                  example: private
+                id:
+                  type: integer
+                  example: 1
+            tyreDimension:
+              type: array
+              items: {}
+              example:
+                - 175/70 R14 84 T
+                - 185/60 R15 84 H
+                - 215/40 R17 87 V
+                - 215/45 R16 86 H
+            vatRecoverable:
+              type: boolean
+            documents:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 8374a0ff-b0aa-4a2e-bd18-0f102a30a041
+                  link:
+                    type: string
+                    example: https://bit.ly/8374a0ff-b0aa-4a2e-bd18-0f102a30a041
+                  source:
+                    type: string
+                    example: autobizTrade
+                  documentType:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 2
+                      key:
+                        type: string
+                        example: rib
+                      name:
+                        type: string
+                        example: RIB
+            wheels:
+              type: object
+              properties:
+                front:
+                  type: object
+                  properties:
+                    rimType:
+                      type: string
+                      example: aluminium
+                    rimDimension:
+                      type: string
+                      example: 175/70 R14
+                    tyreBrand:
+                      type: string
+                      example: michelin
+                rear:
+                  type: object
+                  properties:
+                    rimDimension:
+                      type: string
+                      example: 175/70 R14
+                    tyreBrand:
+                      type: string
+                      example: hankook
+                    drumBrake:
+                      type: boolean
+                      example: true
+                    rimType:
+                      type: string
+                      example: aluminium
+            releaseDate:
+              type: string
+              example: 2006-03-09 00:00:00
+            doors:
+              type: integer
+              example: 5
+            seats:
+              type: integer
+              example: 5
+            makeId:
+              type: integer
+              example: 256
+            fuelId:
+              type: integer
+              example: 1
+            co2Emissions:
+              type: integer
+              example: 184
+            emissionStandard:
+              type: string
+              example: EURO 4
+            images:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 8374a0ff-b0aa-4a2e-bd18-0f102a30a022
+                  link:
+                    type: string
+                    example: https://bit.ly/8374a0ff-b0aa-4a2e-bd18-0f102a30a022
+                  source:
+                    type: string
+                    example: autobizTrade
+                  imageType:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: 1
+                      id:
+                        type: integer
+                        example: Face
+                      key:
+                        type: string
+                        example: frontFull
+            modelName:
+              type: string
+              example: MEGANE
+            engine:
+              type: integer
+              example: 110
+            metallicPaint:
+              type: boolean
+              example: false
+            modelId:
+              type: integer
+              example: 256
+            fiscal:
+              type: integer
+              example: 7
+            interiorCoating:
+              type: string
+              example: LEATHER
+        reconditioningCosts:
+          type: object
+          properties:
+            totalCost:
+              type: integer
+              example: 1155
+            costReferential:
+              type: string
+              example: INTERNAL
+            bodyCost:
+              type: integer
+              example: 540
+            interiorCost:
+              type: integer
+              example: 120
+            mechanicalCost:
+              type: integer
+              example: 0
+            servicingCost:
+              type: integer
+              example: 325
+            tyresCost:
+              type: integer
+              example: 170
+        dealership:
+          type: object
+          properties:
+            name:
+              type: string
+              example: EASYREPRISE BOURG-EN-BRESSE
+            localUnitRegistrationNumber:
+              type: string
+              example: 756200135000XXX
+            address:
+              type: object
+              properties:
+                city:
+                  type: string
+                  example: BOURG EN BRESSE
+                zipCode:
+                  type: string
+                  example: 01000
+                postalBox:
+                  type: string
+                  example: 34
+                country:
+                  type: string
+                  example: FR
+                street:
+                  type: string
+                  example: 52 BOULEVARD DE BROU
+            id:
+              type: integer
+              example: 32389
+        comments:
+          type: array
+          items:
+            type: object
+            properties:
+              comment:
+                type: string
+                example: VO acheté chez OPEL/n toujours suivi chez OPEL/n puis Garage Multimax tout marche carosserie quelques défauts intérieur propre
+              source:
+                type: string
+                example: autobizTrade
+              type:
+                type: string
+                example: seller
+              createdBy:
+                type: integer
+                example: 1627979
+              createdAt:
+                type: string
+                example: 2021-01-25 16:02:34
